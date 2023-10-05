@@ -3,7 +3,7 @@ import SlimSelect from 'slim-select'
 import Notiflix from 'notiflix';
 
 
-import { fetchBreeds } from './cat-api';
+import {fetchCatByBreed} from './cat-api';
 
 const refs = {
   selectBreed: document.querySelector('.breed-select'),
