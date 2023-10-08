@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const divMarkup = document.querySelector('.cat-info');
   const loader = document.querySelector('.loader');
   const error = document.querySelector('.error');
-
+  
   loader.style.display = 'block';
-  selectBreed.style.display = 'none';
+
   divMarkup.style.display = 'none';
   error.style.display = 'none';
 
@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
             
           }
         }
-        
       })
       data.forEach((el) => {
         const option = document.createElement('option');
