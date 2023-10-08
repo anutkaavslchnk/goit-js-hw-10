@@ -1,65 +1,70 @@
-
-import SlimSelect from 'slim-select'
+import SlimSelect from 'slim-select';
 import 'slim-select/dist/slimselect.css';
 import Notiflix from 'notiflix';
+import { fetchCatByBreed, fetchBreeds } from './cat-api';
 
+document.addEventListener('DOMContentLoaded', function () {
+  
+  const divMarkup = document.querySelector('.cat-info');
+  const loader = document.querySelector('.loader');
+  const error = document.querySelector('.error');
 
-import {fetchCatByBreed} from './cat-api';
+  loader.style.display = 'block';
+  selectBreed.style.display = 'none';
+  divMarkup.style.display = 'none';
+  error.style.display = 'none';
 
-const refs = {
-  selectBreed: document.querySelector('.breed-select'),
-  divMarkup: document.querySelector('.cat-info'),
-  loader: document.querySelector('.loader'),
-  error: document.querySelector('.error'),
-  option: document.createElement('option'),
-};
-new SlimSelect({
-  select: '.breed-select'
-})
-
-function createBreed() {
   fetchBreeds()
     .then((data) => {
+      new SlimSelect({
+        select: '.select-breed',
+        events: {
+          afterChange: (event) => {
+            
+            const selectId = event.target.value;
+              loader.style.display = 'block';
+              divMarkup.style.display = 'none';
+              error.style.display = 'none';
+      
+              fetchCatByBreed(selectId)
+                .then(function (catData) {
+                  divMarkup.innerHTML = `<img src="${catData.url}" alt="${catData.name}" class="breed-icon" width="500" height="auto" />
+                  <h2 class="name-breed">${catData.name}</h2>
+                  <p class="desc-breed">${catData.description}</p>
+                  <p class="personality-breed"><span style="font-weight:700">Temperament: </span>${catData.temperament}</p>
+                `;
+      
+                  loader.style.display = 'none';
+                  divMarkup.style.display = 'block';
+                })
+                .catch((err) => {
+                  Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!');
+                  loader.style.display = 'none';
+                  error.style.display = 'block';
+                });
+            
+          }
+        }
+        
+      })
       data.forEach((el) => {
         const option = document.createElement('option');
-
         option.value = el.id;
-        option.text = el.name;
-        refs.selectBreed.appendChild(option);
+        option.textContent = el.name;
+        selectBreed.appendChild(option);
       });
-    })
-    .catch((err) => (Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!')))
-    .finally(() => (refs.loader.style.display = 'none'));
-}
+
+      loader.style.display = 'none';
+      selectBreed.style.display = 'block';
+      divMarkup.style.display = 'block';
 
 
-refs.selectBreed.addEventListener('change', newBreed);
 
-function newBreed(event) {
-  refs.loader.style.display = 'block';
-  refs.error.style.display = 'none';
-  fetchCatByBreed(event.currentTarget.value)
-    .then((data) => {
-      refs.divMarkup.innerHTML = createMarkup(data.breed);
+      
     })
     .catch((err) => {
-      refs.error.style.display = 'block';
-    })
-    .finally(() => {
-      refs.loader.style.display = 'none';
+      Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!');
+      loader.style.display = 'none';
+      error.style.display = 'block';
     });
-}
-
-function createMarkup(arr) {
-  return arr
-    .map(({ url, alt_names, about: { name, description, temperament } }) => `
-      <img src="${url}" alt="${alt_names}" class="breed-icon" />
-      <h2 class="name-breed">${name}</h2>
-      <p class="desc-breed">${description}</p>
-      <p class="personality-breed">${temperament}</p>
-    `)
-    .join('');
-}
-
-
-
+});
