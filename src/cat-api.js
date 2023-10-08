@@ -3,10 +3,10 @@ import SlimSelect from 'slim-select';
 import Notiflix from 'notiflix';
 
 axios.defaults.headers.common['x-api-key'] = 'live_HbIFh9cbhKGfdMHg6tnGBwIXK2jpKe6m7EWJh4gG7bkVCjxfoLmvZbLjHkFABpGf';
-
-const breedSelect = new SlimSelect({
-  select: document.querySelector('.breed-select',)
+const slim = new SlimSelect({
+  select: document.querySelector('.breed-select'),
 });
+
 
 export function fetchCatByBreed(breedId) {
   return axios
@@ -31,7 +31,7 @@ export function fetchBreeds() {
   return axios
     .get('https://api.thecatapi.com/v1/breeds')
     .then((response) => {
-      breedSelect.setData(response.data.map((el) => ({ text: el.name, value: el.id })));
+      slim.setData(response.data.map((el) => ({ text: el.name, value: el.id })));
       return response.data;
     })
     .catch((error) => {
