@@ -7,14 +7,18 @@ document.addEventListener('DOMContentLoaded', function () {
   const divMarkup = document.querySelector('.cat-info');
   const loader = document.querySelector('.loader');
   const error = document.querySelector('.error');
+  
 
   loader.style.display = 'block';
   divMarkup.style.display = 'none';
   error.style.display = 'none';
+  
+
 
        const slimSelect = new SlimSelect({
         data: [],
-        select: '.select-breed',
+        select:document.querySelector('.breed-select'),
+    
         events: {
           afterChange: (info) => {
             const selectId = info[0].value;
@@ -31,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   <p class="desc-breed">${catData.description}</p>
                   <p class="personality-breed"><span style="font-weight:700">Temperament: </span>${catData.temperament}</p>
                 `;
-
+       
                 loader.style.display = 'none';
                 divMarkup.style.display = 'block';
               })
@@ -42,10 +46,11 @@ document.addEventListener('DOMContentLoaded', function () {
               });
           },
         },
-      });
+      }); 
 
       fetchBreeds(slimSelect)
       .then((data) => {
+      
       loader.style.display = 'none';
       divMarkup.style.display = 'block';
     })
@@ -57,3 +62,4 @@ document.addEventListener('DOMContentLoaded', function () {
   
 });
 
+export { slimSelect };
