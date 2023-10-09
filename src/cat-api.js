@@ -27,7 +27,7 @@ export function fetchCatByBreed(breedId) {
     });
 }
 
-export function fetchBreeds(slim) {
+export function fetchBreeds() {
   return axios
     .get('https://api.thecatapi.com/v1/breeds')
     .then((response) => {

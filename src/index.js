@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         select: '.select-breed',
         events: {
           afterChange: (info) => {
-            const selectId = info.value;
+            const selectId = info[0].value;
             
             loader.style.display = 'block';
             divMarkup.style.display = 'none';
