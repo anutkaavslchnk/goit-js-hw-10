@@ -12,15 +12,13 @@ document.addEventListener('DOMContentLoaded', function () {
   divMarkup.style.display = 'none';
   error.style.display = 'none';
 
-    fetchBreeds()
-    .then((data) => {
-       const slim = new SlimSelect({
-        data: data.map((el) => ({ text: el.name, value: el.id })),
+       const slimSelect = new SlimSelect({
+        data: [],
         select: '.select-breed',
         events: {
           afterChange: (info) => {
             const selectId = info.value;
-            console.log('Selected breed ID:', selectId);
+            
             loader.style.display = 'block';
             divMarkup.style.display = 'none';
             error.style.display = 'none';
@@ -46,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
       });
 
+      fetchBreeds(slimSelect)
+      .then((data) => {
       loader.style.display = 'none';
       divMarkup.style.display = 'block';
     })
@@ -54,5 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
       loader.style.display = 'none';
       error.style.display = 'block';
     });
+  
 });
 
