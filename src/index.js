@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
        const slimSelect = new SlimSelect({
         data: [],
         select:document.querySelector('.breed-select'),
-    
+        display: false, 
         events: {
           afterChange: (info) => {
             const selectId = info[0].value;
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       fetchBreeds(slimSelect)
       .then((data) => {
-      
+      slimSelect.select.display=true;
       loader.style.display = 'none';
       divMarkup.style.display = 'block';
     })
