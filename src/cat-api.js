@@ -25,12 +25,12 @@ export function fetchCatByBreed(breedId) {
     });
 }
 
-export function fetchBreeds(breedSelect) {
+export function fetchBreeds() {
   return axios
     .get('https://api.thecatapi.com/v1/breeds')
     .then((response) => {
-      breedSelect.setData(response.data.map((el) => ({ text: el.name, value: el.id })));
-      return response.data;
+
+      return response;
     })
     .catch((error) => {
       Notiflix.Notify.failure('Failed to fetch cat breeds');
