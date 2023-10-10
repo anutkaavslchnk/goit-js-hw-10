@@ -30,7 +30,7 @@ export function fetchBreeds() {
     .get('https://api.thecatapi.com/v1/breeds')
     .then((response) => {
 
-      return response;
+      return response.data;
     })
     .catch((error) => {
       Notiflix.Notify.failure('Failed to fetch cat breeds');
