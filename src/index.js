@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const divMarkup = document.querySelector('.cat-info');
   const loader = document.querySelector('.loader');
   const error = document.querySelector('.error');
-  selectBreed.style.display = 'none';
+selectBreed.classList.add('visually-hidden');
   loader.style.display = 'block';
   divMarkup.style.display = 'none';
   error.style.display = 'none';
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
       events: {
         afterChange: (info) => {
           const selectId = info[0].value;
-          selectBreed.style.display = 'none';
+         
           loader.style.display = 'block';
           divMarkup.style.display = 'none';
           error.style.display = 'none';
@@ -53,11 +53,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   fetchBreeds()
     .then((data) => {
-       mapData = data.map((el) => ({ text: el.name, value: el.id }));
-     
       
-      selectBreed.style.display = 'block';
+       mapData = data.map((el) => ({ text: el.name, value: el.id }));
+
+       selectBreed.classList.remove("visually-hidden");
+  
       loader.style.display = 'none';
+
       divMarkup.style.display = 'block';
       initializationSelect();
     })
